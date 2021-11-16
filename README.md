@@ -1,2 +1,2 @@
 # Datenbanken_II_DateWarehouse
-Repository for the Presentation about TABLEAU in the Course Datenbanken II - Data Warehouse @DHBW - Karlsruhe
+Repository for the Presentation on Lecture 6 in the Course Datenbanken II - Implementierung @DHBW - Karlsruhe
