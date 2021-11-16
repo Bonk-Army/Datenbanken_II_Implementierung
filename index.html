@@ -67,11 +67,10 @@
 <body>
 <div class="scriptsVARIABLES">
 	<script>
-		let lisaIcon = "&#129446;"; // 🦦
 		let nicoIcon = "&#129433;"; // 🦙
-		let patrickIcon = "&#128012;"; // 🐌
-		let krissiIcon = "&#128024;"; // 🐘
-		let henningIcon = "&#128031;"; // 🐟
+		let dannyIcon = "&#127947;"; // 🏋️
+		let georgIcon = "&#128170;"; // 💪
+		let denisIcon = "&#128187;"; // 💻
 	</script>
 </div>
 <div class="reveal">
@@ -82,6 +81,7 @@
 			bottom: 1em;
 			left: 1em;
 			font-size: 0.5em;
+			line-height: 23px;
 		}
 		.header{
 			position: absolute;
@@ -102,8 +102,16 @@
 		h1,h2,h3,h4,h5,h6{
 			padding-top: 2%;
 		}
-		.li__main--topic {
+		.li__main--topic,.li__main--topic-header{
 			color: #e74c3c;
+			font-weight: bold;
+		}
+		.li__sub--topic,.li__main--topic-sub-header{
+			color: darkorange;
+			font-weight: bold;
+		}
+		.li__sub__sub--topic,.li__main--topic-sub-sub-header{
+			color: lightskyblue;
 			font-weight: bold;
 		}
 		.caption {
@@ -113,20 +121,19 @@
 		}
 	</style>
 	<div class='footer'>
-		&#127891; DB II - Data Warehouse <br>
+		&#127891; DB II - Implementierungen <br>
 		&#128197; 22.11.2021 <br>
-		&#128100; Lisa Kletsko, Nico Holzh&aumluser, <br>
-		&#128100; Patrick M&uumlller, Kristin Agne & Henning Sextro
+		&#128100; Denis Thiessen, Nico Holzh&aumluser, <br>
+		<span style="padding-left:29px"></span> Danny Kroll & Georg Reichert
 	</div>
 	<div id="persons" class="persons"><script>document.write(nicoIcon)</script></div>
 	<!-- Slides -->
 	<div class="slides" id="organisatorisches">
 		<!-- Introduction -->
 		<section>
-			<h2> &#10084;&#65039; - Willkommen zu unserer <br>Präsentation über</h2>
-			<p>
-				<img style="width: 70%" src="./ressources/images/tableaulogo_highres.png">
-			</p>
+			<h2> &#10084;&#65039; - Willkommen zu unserer <br> Präsentation über</h2> <br>
+			<a><b>Programmier und sonstige Schnittstellen & <br> Optimierung von Anfragen</b></a> <br>
+			<em>Vorlesung 6</em>
 		</section>
 		<!-- Dividing -->
 		<section>
@@ -134,11 +141,10 @@
 			<p>
 				&#8598; Jedes Symbol steht für einen anderen Sprecher
 			<ul style="list-style-type: none">
-				<li><script>document.write(lisaIcon)</script> &#8594; Lisa Kletsko</li>
-				<li><script>document.write(nicoIcon)</script> &#8594; Nico Holzh&auml&aumluser</li>
-				<li><script>document.write(patrickIcon)</script> &#8594; Patrick M&uumlller</li>
-				<li><script>document.write(krissiIcon)</script> &#8594; Kristin Agne</li>
-				<li><script>document.write(henningIcon)</script> &#8594; Henning Sextro</li>
+				<li><script>document.write(denisIcon)</script> &#8594; Denis Thiessen</li>
+				<li><script>document.write(nicoIcon)</script> &#8594; Nico Holzh&aumluser</li>
+				<li><script>document.write(dannyIcon)</script> &#8594; Danny Kroll</li>
+				<li><script>document.write(georgIcon)</script> &#8594; Georg Reichert</li>
 			</ul>
 			</p>
 		</section>
@@ -146,19 +152,25 @@
 		<section>
 			<h2 style="padding-top: 1%">Inhalt</h2>
 			<ol type="1" style="font-size:60%;">
-				<li class="li__main--topic">Die Firma "Tableau"</li>
-				<li class="li__main--topic">BI und Data Warehouse</li>
-				<li class="li__main--topic">ETL Prozesse</li>
-				<li class="li__main--topic">Reporting</li>
-				<li class="li__main--topic">Data Mining</li>
-				<li class="li__main--topic">Big Data</li>
+				<li class="li__main--topic">Schnittstellen</li>
+				<ol>
+					<li class="li__sub--topic">Datenbankschnittstellen</li>
 					<ol>
-						<li>Was ist Big Data</li>
-						<li>Wie ist die Firma im Bezug auf Big Data aufgestellt</li>
+						<li class="li__sub__sub--topic">SQL Command Line</li>
+						<li class="li__sub__sub--topic">DB spezifische SQL - Schnittstellen</li>
+						<li class="li__sub__sub--topic">Stored Procedures</li>
 					</ol>
-				<li class="li__main--topic">Analysten</li>
+					<li class="li__sub--topic">Programmierschnittstellen</li>
 					<ol>
-						<li>Was sagen Analytiker zu "TABLOU"</li>
+						<li class="li__sub__sub--topic">ODBC</li>
+						<li class="li__sub__sub--topic">JDBC</li>
+						<li class="li__sub__sub--topic">PLSQL</li>
+					</ol>
+				</ol>
+				<li class="li__main--topic">Optimierung von Abfragen</li>
+					<ol>
+						<li class="li__sub--topic">Grundprinzip der Optimierung</li>
+						<li class="li__sub--topic">Phasen der Optimierung</li>
 					</ol>
 			</ol>
 		</section>
@@ -173,116 +185,114 @@
     | (____/\| (__/  )___) (___   | |     | )   ( || (____/\
     (_______/(______/ \_______/   )_(     |/     \|(_______/
     -->
-	<div class="slides" id="firma">
+	<div class="slides" id="Schnittstellen">
+		<section>
+			<h1 style="color: #e74c3c;">Schnittstellen</h1>
+		</section>
+
 		<section>
 			<section>
-				<h1>Die Firma "Tableau"</h1>
+				<h2 style="color: darkorange;">Datenbankschnittstellen</h2>
+			</section>
+
+			<!-- SQL Command Line-->
+			<section>
+				<h3 style="color: lightskyblue;">SQL Command Line</h3>
+			</section>
+
+			<!-- DB spezifische SQL - Schnittstellen -->
+			<section>
+				<h3 style="color: lightskyblue;">DB spezifische SQL - Schnittstellen</h3>
+			</section>
+
+			<!-- Stored Procedures-->
+			<section>
+				<h3 style="color: lightskyblue;">Stored Procedures</h3>
+			</section>
+		</section>
+
+		<section>
+			<section>
+				<h2 style="color: darkorange;">Programmierschnittstellen</h2>
+			</section>
+
+			<!-- ODBC -->
+			<section>
+				<h3 style="color: lightskyblue;">ODBC</h3>
+			</section>
+
+			<!-- JDBC -->
+			<section>
+				<h3 style="color: lightskyblue;">JDBC</h3>
+			</section>
+
+			<!-- PLSQL -->
+			<section>
+				<h3 style="color: lightskyblue;">PLSQL</h3>
 			</section>
 		</section>
 	</div>
-	<div class="slides" id="biDataWarehouse">
+
+	<div class="slides" id="Optimierung von Abfragen">
 		<section>
-			<section>
-				<h1>BI und Data Warehouse</h1>
-			</section>
+			<h1 style="color: #e74c3c;">Optimierung von Abfragen</h1>
 		</section>
-	</div>
-	<div class="slides" id="ETLProzess">
+
 		<section>
 			<section>
-				<h1>ETL Prozess</h1>
-				<p class="caption">
-					<img src="https://miro.medium.com/max/2400/0*yrE1Ic_-ewXUa05h" style="width: 38%;">
-					<br> Source : <a href="https://medium.com/sciforce/what-is-etl-1df5305bb341">https://medium.com/sciforce/what-is-etl-1df5305bb341</a>
-				</p>
+				<h2 style="color: darkorange;">Grundprinzip der Optimierung</h2>
 			</section>
+
 			<section>
-				<h1>ETL Prozesse - TABLEAU</h1>
-				<p class="caption">
-					<img src="https://cdns.tblsft.com/sites/default/files/pages/data-flow.jpg" style="width: 50%;">
-					<br> Source : <a href="https://www.tableau.com/de-de/products/prep">https://www.tableau.com/de-de/products/prep</a>
-				</p>
+				<h3 style="color: lightskyblue;">Logische Optimierung</h3>
 			</section>
+
 			<section>
-				<h1>TABLEAU Prep</h1>
-				<p class="caption">
-					<img src="https://cdnl.tblsft.com/sites/default/files/pages/complete_picture_of_data_full.png" style="width: 45%">
-					<br> Source : <a href="https://www.tableau.com/de-de/products/prep">https://www.tableau.com/de-de/products/prep</a>
-				</p>
+				<h3 style="color: lightskyblue;">Physische Optimierung</h3>
 			</section>
+
 			<section>
-				<h1>Tableau Prep</h1>
-				Mit TABLEAU Prep können Daten für die Analyse kombiniert, formatiert und aufbereiten werden. <br>
+				<h3 style="color: lightskyblue;">Kostenbasierte Auswahl</h3>
+			</section>
+
+		</section>
+
+		<section>
+			<section>
+				<h2 style="color: darkorange;">Phasen der Optimierung</h2>
+			</section>
+
+			<section>
+				<h3 style="color: lightskyblue;">Anfrageübersetzung und -vereinfachung</h3>
+			</section>
+
+			<section>
+				<h3 style="color: lightskyblue;">Bereits in Sektion 2.1 behandelt</h3>
 				<ul>
-					<li>Eigentlicher ETL Prozess ist integriert</li>
-					<li>Viele mögliche Datenquellen konfigurierbar</li>
-					<li>Desktop Client, der unterbrechnugsfreies Arbeiten zwischen Web und PC ermöglicht</li>
-					<li>Einheitliche Schemata für bestimmte Datenbestände</li>
-					<ol>
-						<li>Schemata bestehen aus vielen verschiedenen Datenquellen und vereinen diese</li>
-						<li>Ein Schema kann Unternehmensweit geteilt werden</li>
-						<li>Wird auf dem Server ausgeführt</li>
-					</ol>
+					<li style="color: lightskyblue;">Logische Optimierung</li>
+					<li style="color: lightskyblue;">Physische Optimierung</li>
+					<li style="color: lightskyblue;">Kostenbasierte Auswahl</li>
 				</ul>
 			</section>
+
 			<section>
-				<h1>ETL - Overlay</h1>
-				<p class="caption">
-					<img src="https://cdns.tblsft.com/sites/default/files/pages/stay_in_the_flow_cropped2.png" style="width: 50%">
-					<br> Source : <a href="https://www.tableau.com/de-de/products/prep">https://www.tableau.com/de-de/products/prep</a>
-				</p>
+				<h3 style="color: lightskyblue;">Planparametrisierung</h3>
 			</section>
+
 			<section>
-				<h1>Verschiedene Datenquellen</h1>
-				<p class="caption">
-					<img src="https://cdns.tblsft.com/sites/default/files/pages/prep_0.png" style="width: 50%">
-					<br> Source : <a href="https://www.tableau.com/de-de/products/prep">https://www.tableau.com/de-de/products/prep</a>
-				</p>
-			</section>
-			<section>
-				<h1>Daten vereinheitlichen</h1>
-				<p class="caption">
-					<img src="https://cdnl.tblsft.com/sites/default/files/pages/smart-gif_cropped.gif" style="width: 45%">
-					<br> Source : <a href="https://www.tableau.com/de-de/products/prep">https://www.tableau.com/de-de/products/prep</a>
-				</p>
+				<h3 style="color: lightskyblue;">Codeerzeugung</h3>
 			</section>
 		</section>
 	</div>
-	<div class="slides" id="Reporting">
-		<section>
-			<section>
-				<h1>Reporting</h1>
-			</section>
-		</section>
-	</div>
-	<div class="slides" id="DataMining">
-		<section>
-			<section>
-				<h1>Data Mining</h1>
-			</section>
-		</section>
-	</div>
-	<div class="slides" id="Big Data">
-		<section>
-			<section>
-				<h1>Big Data</h1>
-			</section>
-		</section>
-	</div>
-	<div class="slides" id="Analysten">
-		<section>
-			<section>
-				<h1>Analysten</h1>
-			</section>
-		</section>
-	</div>
+
 	<div class="slides" id="endslide">
 		<section>
 			<h1>Vielen Dank für eure  <br> Aufmerksamkeit! &#10084;&#65039;️</h1>
 			<br>
-			<p>Schaut auch gerne in unseren <a target="_blank" href="https://github.com/Unk3wn/Datenbanken_II_DataWarehouse">Presentation - Code</a> und <a target="_blank" href="https://revealjs.com/">reveal.js</a></p>
+			<p>Schaut auch gerne in unseren <a target="_blank" href="https://github.com/Unk3wn/Datenbanken_II_DataWarehouse/">Presentation - Code</a> und <a target="_blank" href="https://revealjs.com/">reveal.js</a></p>
 		</section>
 	</div>
+
 	<!-- NO CHANGING AFTER HERE -->
 </div>
 <div id="scripts">
@@ -301,20 +311,8 @@
 			plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
 		});
 		Reveal.on( 'slidechanged', event => {
-			if(event.indexh == 3){
-				document.getElementById("persons").innerHTML = krissiIcon;
-			}
 			if(event.indexh == 5){
 				document.getElementById("persons").innerHTML = nicoIcon;
-			}
-			if(event.indexh == 6){
-				document.getElementById("persons").innerHTML = patrickIcon;
-			}
-			if(event.indexh == 7){
-				document.getElementById("persons").innerHTML = lisaIcon;
-			}
-			if(event.indexh == 9){
-				document.getElementById("persons").innerHTML = henningIcon;
 			}
 		});
 	</script>
