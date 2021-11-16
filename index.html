@@ -43,292 +43,367 @@
 
 -->
 <html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<!-- https://www.freepik.com from www.flaticon.com -->
-	<link rel="icon" type="image/png" href="./resources/images/favicon.png"/>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<!-- https://www.freepik.com from www.flaticon.com -->
+		<link rel="icon" type="image/png" href="./resources/images/favicon.png"/>
 
-	<title>Datenbanken II - Implementierung - Vorlesung 6</title>
+		<title>Datenbanken II - Implementierung - Vorlesung 6</title>
 
-	<link rel="stylesheet" href="dist/reset.css">
-	<link rel="stylesheet" href="dist/reveal.css">
-	<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css" id="theme">
 
-	<!-- Theme used for syntax highlighted code -->
-	<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
 
-	<!-- Bootstrap-->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-</head>
-<body>
-<div class="scriptsVARIABLES">
-	<script>
-		let nicoIcon = "&#129433;"; // 🦙
-		let dannyIcon = "&#127947;"; // 🏋️
-		let georgIcon = "&#128170;"; // 💪
-		let denisIcon = "&#128187;"; // 💻
-	</script>
-</div>
-<div class="reveal">
-	<!-- Footer && <Header -->
-	<style>
-		.reveal .footer {
-			position: absolute;
-			bottom: 1em;
-			left: 1em;
-			font-size: 0.5em;
-			line-height: 23px;
-		}
-		.header{
-			position: absolute;
-			top: 1em;
-			right : 1em;
-		}
-		.troll{
-			position: absolute;
-			top: 10px;
-			right : 10px;
-			font-size: 12px;
-		}
-		.persons{
-			position: absolute;
-			top: 20px;
-			left : 15px;
-		}
-		h1,h2,h3,h4,h5,h6{
-			padding-top: 2%;
-		}
-		.li__main--topic,.li__main--topic-header{
-			color: #e74c3c;
-			font-weight: bold;
-		}
-		.li__sub--topic,.li__main--topic-sub-header{
-			color: darkorange;
-			font-weight: bold;
-		}
-		.li__sub__sub--topic,.li__main--topic-sub-sub-header{
-			color: lightskyblue;
-			font-weight: bold;
-		}
-		.caption {
-			color: gray;
-			font-size: 13pt;
-			margin-top: 20pt;
-		}
-	</style>
-	<div class='footer'>
-		&#127891; DB II - Implementierungen <br>
-		&#128197; 22.11.2021 <br>
-		&#128100; Denis Thiessen, Nico Holzh&aumluser, <br>
-		<span style="padding-left:29px"></span> Danny Kroll & Georg Reichert
-	</div>
-	<div id="persons" class="persons"><script>document.write(nicoIcon)</script></div>
-	<!-- Slides -->
-	<div class="slides" id="organisatorisches">
-		<!-- Introduction -->
-		<section>
-			<h2> &#10084;&#65039; - Willkommen zu unserer <br> Präsentation über</h2> <br>
-			<a><b>Programmier und sonstige Schnittstellen & <br> Optimierung von Anfragen</b></a> <br>
-			<em>Vorlesung 6</em>
-		</section>
-		<!-- Dividing -->
-		<section>
-			<h3>Sprecher</h3>
-			<p>
-				&#8598; Jedes Symbol steht für einen anderen Sprecher
-			<ul style="list-style-type: none">
-				<li><script>document.write(denisIcon)</script> &#8594; Denis Thiessen</li>
-				<li><script>document.write(nicoIcon)</script> &#8594; Nico Holzh&aumluser</li>
-				<li><script>document.write(dannyIcon)</script> &#8594; Danny Kroll</li>
-				<li><script>document.write(georgIcon)</script> &#8594; Georg Reichert</li>
-			</ul>
-			</p>
-		</section>
-		<!-- ToC -->
-		<section>
-			<h2 style="padding-top: 1%">Inhalt</h2>
-			<ol type="1" style="font-size:50%;">
-				<li class="li__main--topic">Schnittstellen</li>
-				<ol>
-					<li class="li__sub--topic">Datenbankschnittstellen</li>
-					<ol>
-						<li class="li__sub__sub--topic">SQL Command Line</li>
-						<li class="li__sub__sub--topic">DB spezifische SQL - Schnittstellen</li>
-						<li class="li__sub__sub--topic">Stored Procedures</li>
-					</ol>
-					<li class="li__sub--topic">Programmierschnittstellen</li>
-					<ol>
-						<li class="li__sub__sub--topic">ODBC</li>
-						<li class="li__sub__sub--topic">JDBC</li>
-						<li class="li__sub__sub--topic">PLSQL</li>
-					</ol>
-				</ol>
-				<li class="li__main--topic">Optimierung von Abfragen</li>
-					<ol>
-						<li class="li__sub--topic">Grundprinzip der Optimierung</li>
+		<!-- Chalkboard -->
+		<link rel="stylesheet" href="./plugin/chalkboard/style.css">
+		<link rel="stylesheet" href="./plugin/customcontrols/style.css">
+		<!-- Font awesome -->
+		<link rel="stylesheet" href="./plugin/menu/font-awesome/css/fontawesome.css">
+
+		<!-- Bootstrap-->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+	</head>
+	<body>
+		<div class="scriptsVARIABLES">
+			<script>
+				let nicoIcon = "&#129433;"; // 🦙
+				let dannyIcon = "&#127947;"; // 🏋️
+				let georgIcon = "&#128170;"; // 💪
+				let denisIcon = "&#128187;"; // 💻
+			</script>
+		</div>
+		<div class="reveal">
+			<!-- Footer && <Header -->
+			<style>
+				.reveal .footer {
+					position: absolute;
+					top: 1em;
+					right: 1em;
+					font-size: 0.5em;
+					line-height: 23px;
+				}
+				.header{
+					position: absolute;
+					top: 1em;
+					right : 1em;
+				}
+				.troll{
+					position: absolute;
+					top: 10px;
+					right : 10px;
+					font-size: 12px;
+				}
+				.persons{
+					position: absolute;
+					top: 20px;
+					left : 15px;
+				}
+				h1,h2,h3,h4,h5,h6{
+					padding-top: 2%;
+				}
+				.li__main--topic,.li__main--topic-header{
+					color: #e74c3c;
+					font-weight: bold;
+				}
+				.li__sub--topic,.li__main--topic-sub-header{
+					color: darkorange;
+					font-weight: bold;
+				}
+				.li__sub__sub--topic,.li__main--topic-sub-sub-header{
+					color: lightskyblue;
+					font-weight: bold;
+				}
+				.caption {
+					color: gray;
+					font-size: 13pt;
+					margin-top: 20pt;
+				}
+			</style>
+			<div class='footer'>
+				&#127891; DB II - Implementierungen <br>
+				&#128197; 22.11.2021 <br>
+				&#128100; Denis Thiessen, Nico Holzh&aumluser, <br>
+				<span style="padding-left:29px"></span> Danny Kroll & Georg Reichert
+			</div>
+			<div id="persons" class="persons"><script>document.write(nicoIcon)</script></div>
+			<!-- Slides -->
+			<div class="slides" id="organisatorisches">
+				<!-- Introduction -->
+				<section>
+					<h2> &#10084;&#65039; - Willkommen zu unserer <br> Präsentation über</h2> <br>
+					<a><b>Programmier und sonstige Schnittstellen & <br> Optimierung von Anfragen</b></a> <br>
+					<em>Vorlesung 6</em>
+				</section>
+				<!-- Dividing -->
+				<section>
+					<h3>Sprecher</h3>
+					<p>
+						&#8598; Jedes Symbol steht für einen anderen Sprecher
+					<ul style="list-style-type: none">
+						<li><script>document.write(denisIcon)</script> &#8594; Denis Thiessen</li>
+						<li><script>document.write(nicoIcon)</script> &#8594; Nico Holzh&aumluser</li>
+						<li><script>document.write(dannyIcon)</script> &#8594; Danny Kroll</li>
+						<li><script>document.write(georgIcon)</script> &#8594; Georg Reichert</li>
+					</ul>
+					</p>
+				</section>
+				<!-- ToC -->
+				<section>
+					<h2 style="padding-top: 1%">Inhalt</h2>
+					<ol type="1" style="font-size:50%;">
+						<li class="li__main--topic">Schnittstellen</li>
 						<ol>
-							<li class="li__sub__sub--topic">Logische Optimierung</li>
-							<li class="li__sub__sub--topic">Physische Optimierung</li>
-							<li class="li__sub__sub--topic">Kostenbasierte Auswahl</li>
+							<li class="li__sub--topic">Datenbankschnittstellen</li>
+							<ol>
+								<li class="li__sub__sub--topic">SQL Command Line</li>
+								<li class="li__sub__sub--topic">DB spezifische SQL - Schnittstellen</li>
+								<li class="li__sub__sub--topic">Stored Procedures</li>
+							</ol>
+							<li class="li__sub--topic">Programmierschnittstellen</li>
+							<ol>
+								<li class="li__sub__sub--topic">ODBC</li>
+								<li class="li__sub__sub--topic">JDBC</li>
+								<li class="li__sub__sub--topic">PLSQL</li>
+							</ol>
 						</ol>
-						<li class="li__sub--topic">Phasen der Optimierung</li>
-						<ol>
-							<li class="li__sub__sub--topic">Anfrageübersetzung und -vereinfachung</li>
-							<li class="li__sub__sub--topic">Logische Optimierung</li>
-							<li class="li__sub__sub--topic">Physische Optimierung</li>
-							<li class="li__sub__sub--topic">Kostenbasierte Auswahl</li>
-							<li class="li__sub__sub--topic">Planparametrisierung</li>
-							<li class="li__sub__sub--topic">Codeerzeugung</li>
-						</ol>
+						<li class="li__main--topic">Optimierung von Abfragen</li>
+							<ol>
+								<li class="li__sub--topic">Grundprinzip der Optimierung</li>
+								<ol>
+									<li class="li__sub__sub--topic">Logische Optimierung</li>
+									<li class="li__sub__sub--topic">Physische Optimierung</li>
+									<li class="li__sub__sub--topic">Kostenbasierte Auswahl</li>
+								</ol>
+								<li class="li__sub--topic">Phasen der Optimierung</li>
+								<ol>
+									<li class="li__sub__sub--topic">Anfrageübersetzung und -vereinfachung</li>
+									<li class="li__sub__sub--topic">Logische Optimierung</li>
+									<li class="li__sub__sub--topic">Physische Optimierung</li>
+									<li class="li__sub__sub--topic">Kostenbasierte Auswahl</li>
+									<li class="li__sub__sub--topic">Planparametrisierung</li>
+									<li class="li__sub__sub--topic">Codeerzeugung</li>
+								</ol>
+							</ol>
 					</ol>
-			</ol>
-		</section>
-	</div>
-	<!--
-     _______  ______  __________________   _______  _______
-    (  ____ \(  __  \ \__   __/\__   __/  (       )(  ____ \
-    | (    \/| (  \  )   ) (      ) (     | () () || (    \/
-    | (__    | |   ) |   | |      | |     | || || || (__
-    |  __)   | |   | |   | |      | |     | |(_)| ||  __)
-    | (      | |   ) |   | |      | |     | |   | || (
-    | (____/\| (__/  )___) (___   | |     | )   ( || (____/\
-    (_______/(______/ \_______/   )_(     |/     \|(_______/
-    -->
-	<div class="slides" id="Schnittstellen">
-		<section>
-			<h1 style="color: #e74c3c;">Schnittstellen</h1>
-		</section>
+				</section>
+			</div>
+			<!--
+			 _______  ______  __________________   _______  _______
+			(  ____ \(  __  \ \__   __/\__   __/  (       )(  ____ \
+			| (    \/| (  \  )   ) (      ) (     | () () || (    \/
+			| (__    | |   ) |   | |      | |     | || || || (__
+			|  __)   | |   | |   | |      | |     | |(_)| ||  __)
+			| (      | |   ) |   | |      | |     | |   | || (
+			| (____/\| (__/  )___) (___   | |     | )   ( || (____/\
+			(_______/(______/ \_______/   )_(     |/     \|(_______/
+			-->
+			<div class="slides" id="Schnittstellen">
+				<section>
+					<h1 style="color: #e74c3c;">Schnittstellen</h1>
+				</section>
 
-		<section>
-			<section>
-				<h2 style="color: darkorange;">Datenbankschnittstellen</h2>
-			</section>
+				<section>
+					<section>
+						<h2 style="color: darkorange;">Datenbankschnittstellen</h2>
+					</section>
 
-			<!-- SQL Command Line-->
-			<section>
-				<h3 style="color: lightskyblue;">SQL Command Line</h3>
-			</section>
+					<!-- SQL Command Line-->
+					<section>
+						<h3 style="color: lightskyblue;">SQL Command Line</h3>
+					</section>
 
-			<!-- DB spezifische SQL - Schnittstellen -->
-			<section>
-				<h3 style="color: lightskyblue;">DB spezifische SQL - Schnittstellen</h3>
-			</section>
+					<!-- DB spezifische SQL - Schnittstellen -->
+					<section>
+						<h3 style="color: lightskyblue;">DB spezifische SQL - Schnittstellen</h3>
+					</section>
 
-			<!-- Stored Procedures-->
-			<section>
-				<h3 style="color: lightskyblue;">Stored Procedures</h3>
-			</section>
-		</section>
+					<!-- Stored Procedures-->
+					<section>
+						<h3 style="color: lightskyblue;">Stored Procedures</h3>
+					</section>
+				</section>
 
-		<section>
-			<section>
-				<h2 style="color: darkorange;">Programmierschnittstellen</h2>
-			</section>
+				<section>
+					<section>
+						<h2 style="color: darkorange;">Programmierschnittstellen</h2>
+					</section>
 
-			<!-- ODBC -->
-			<section>
-				<h3 style="color: lightskyblue;">ODBC</h3>
-			</section>
+					<!-- ODBC -->
+					<section>
+						<h3 style="color: lightskyblue;">ODBC</h3>
+					</section>
 
-			<!-- JDBC -->
-			<section>
-				<h3 style="color: lightskyblue;">JDBC</h3>
-			</section>
+					<!-- JDBC -->
+					<section>
+						<h3 style="color: lightskyblue;">JDBC</h3>
+					</section>
 
-			<!-- PLSQL -->
-			<section>
-				<h3 style="color: lightskyblue;">PLSQL</h3>
-			</section>
-		</section>
-	</div>
+					<!-- PLSQL -->
+					<section>
+						<h3 style="color: lightskyblue;">PLSQL</h3>
+					</section>
+				</section>
+			</div>
 
-	<div class="slides" id="Optimierung von Abfragen">
-		<section>
-			<h1 style="color: #e74c3c;">Optimierung von Abfragen</h1>
-		</section>
+			<div class="slides" id="Optimierung von Abfragen">
+				<section>
+					<h1 style="color: #e74c3c;">Optimierung von Abfragen</h1>
+				</section>
 
-		<section>
-			<section>
-				<h2 style="color: darkorange;">Grundprinzip der Optimierung</h2>
-			</section>
+				<section>
+					<section>
+						<h2 style="color: darkorange;">Grundprinzip der Optimierung</h2>
+					</section>
 
-			<section>
-				<h3 style="color: lightskyblue;">Logische Optimierung</h3>
-			</section>
+					<section>
+						<h3 style="color: lightskyblue;">Logische Optimierung</h3>
+					</section>
 
-			<section>
-				<h3 style="color: lightskyblue;">Physische Optimierung</h3>
-			</section>
+					<section>
+						<h3 style="color: lightskyblue;">Physische Optimierung</h3>
+					</section>
 
-			<section>
-				<h3 style="color: lightskyblue;">Kostenbasierte Auswahl</h3>
-			</section>
+					<section>
+						<h3 style="color: lightskyblue;">Kostenbasierte Auswahl</h3>
+					</section>
 
-		</section>
+				</section>
 
-		<section>
-			<section>
-				<h2 style="color: darkorange;">Phasen der Optimierung</h2>
-			</section>
+				<section>
+					<section>
+						<h2 style="color: darkorange;">Phasen der Optimierung</h2>
+					</section>
 
-			<section>
-				<h3 style="color: lightskyblue;">Anfrageübersetzung und -vereinfachung</h3>
-			</section>
+					<section>
+						<h3 style="color: lightskyblue;">Anfrageübersetzung und -vereinfachung</h3>
+					</section>
 
-			<section>
-				<h2>Bereits in <a style="color: darkorange;">Sektion 2.1</a> behandelt</h2>
-				<ul>
-					<li style="color: lightskyblue;">Logische Optimierung</li>
-					<li style="color: lightskyblue;">Physische Optimierung</li>
-					<li style="color: lightskyblue;">Kostenbasierte Auswahl</li>
-				</ul>
-			</section>
+					<section>
+						<h2>Bereits in <a style="color: darkorange;">Sektion 2.1</a> behandelt</h2>
+						<ul>
+							<li style="color: lightskyblue;">Logische Optimierung</li>
+							<li style="color: lightskyblue;">Physische Optimierung</li>
+							<li style="color: lightskyblue;">Kostenbasierte Auswahl</li>
+						</ul>
+					</section>
 
-			<section>
-				<h3 style="color: lightskyblue;">Planparametrisierung</h3>
-			</section>
+					<section>
+						<h3 style="color: lightskyblue;">Planparametrisierung</h3>
+					</section>
 
-			<section>
-				<h3 style="color: lightskyblue;">Codeerzeugung</h3>
-			</section>
-		</section>
-	</div>
+					<section>
+						<h3 style="color: lightskyblue;">Codeerzeugung</h3>
+					</section>
+				</section>
+			</div>
 
-	<div class="slides" id="endslide">
-		<section>
-			<h1>Vielen Dank für eure  <br> Aufmerksamkeit! &#10084;&#65039;️</h1>
-			<br>
-			<p>Schaut auch gerne in unseren <a target="_blank" href="https://github.com/Unk3wn/Datenbanken_II_DataWarehouse/">Presentation - Code</a> und <a target="_blank" href="https://revealjs.com/">reveal.js</a></p>
-		</section>
-	</div>
+			<div class="slides" id="endslide">
+				<section>
+					<h1>Vielen Dank für eure  <br> Aufmerksamkeit! &#10084;&#65039;️</h1>
+					<br>
+					<p>Schaut auch gerne in unseren <a target="_blank" href="https://github.com/Unk3wn/Datenbanken_II_DataWarehouse/">Presentation - Code</a> und <a target="_blank" href="https://revealjs.com/">reveal.js</a></p>
+					<br>
+					<p><a href="./index.html?print-pdf">Präsentation drucken</a></p>
+				</section>
+			</div>
 
-	<!-- NO CHANGING AFTER HERE -->
-</div>
-<div id="scripts">
-	<script src="dist/reveal.js"></script>
-	<script src="plugin/notes/notes.js"></script>
-	<script src="plugin/markdown/markdown.js"></script>
-	<script src="plugin/highlight/highlight.js"></script>
-	<script>
-		// More info about initialization & config:
-		// - https://revealjs.com/initialization/
-		// - https://revealjs.com/config/
-		Reveal.initialize({
-			hash: true,
-			showNotes: "true",
-			// Learn about plugins: https://revealjs.com/plugins/
-			plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
-		});
-		Reveal.on( 'slidechanged', event => {
-			if(event.indexh == 5){
-				document.getElementById("persons").innerHTML = nicoIcon;
-			}
-		});
-	</script>
-</div>
-</body>
+			<!-- NO CHANGING AFTER HERE -->
+		</div>
+		<div id="scripts">
+			<script src="dist/reveal.js"></script>
+			<script src="plugin/notes/notes.js"></script>
+			<script src="plugin/markdown/markdown.js"></script>
+			<script src="plugin/highlight/highlight.js"></script>
+			<!-- Chalkboard -->
+			<script src="plugin/chalkboard/plugin.js"></script>
+			<script src="plugin/customcontrols/plugin.js"></script>
+			<script src="plugin/menu/menu.js"></script>
+
+			<script>
+				// More info about initialization & config:
+				// - https://revealjs.com/initialization/
+				// - https://revealjs.com/config/
+				Reveal.initialize({
+					hash: true,
+					showNotes: "true",
+					controls: true,
+					progress: true,
+					history: true,
+					center: true,
+					mouseWheel: true,
+					menu: { // Menu works best with font-awesome installed: sudo apt-get install fonts-font-awesome
+						side:'left',
+						themes: false,
+						transitions: false,
+						markers: false,
+						hideMissingTitles: true
+					},
+					chalkboard: {
+						boardmarkerWidth: 3,
+						chalkWidth: 7,
+						chalkEffect: 1.0,
+						storage: null,
+						src: null,
+						readOnly: undefined,
+						transition: 800,
+						theme: "chalkboard",
+						background: [ 'rgba(127,127,127,.1)' , path + 'img/blackboard.png' ],
+						grid: { color: 'rgb(50,50,10,0.5)', distance: 80, width: 2},
+						eraser: { src: path + 'img/sponge.png', radius: 20},
+						boardmarkers : [
+							{ color: 'rgba(100,100,100,1)', cursor: 'url(' + path + 'img/boardmarker-black.png), auto'},
+							{ color: 'rgba(30,144,255, 1)', cursor: 'url(' + path + 'img/boardmarker-blue.png), auto'},
+							{ color: 'rgba(220,20,60,1)', cursor: 'url(' + path + 'img/boardmarker-red.png), auto'},
+							{ color: 'rgba(50,205,50,1)', cursor: 'url(' + path + 'img/boardmarker-green.png), auto'},
+							{ color: 'rgba(255,140,0,1)', cursor: 'url(' + path + 'img/boardmarker-orange.png), auto'},
+							{ color: 'rgba(150,0,20150,1)', cursor: 'url(' + path + 'img/boardmarker-purple.png), auto'},
+							{ color: 'rgba(255,220,0,1)', cursor: 'url(' + path + 'img/boardmarker-yellow.png), auto'}
+						],
+						chalks: [
+							{ color: 'rgba(255,255,255,0.5)', cursor: 'url(' + path + 'img/chalk-white.png), auto'},
+							{ color: 'rgba(96, 154, 244, 0.5)', cursor: 'url(' + path + 'img/chalk-blue.png), auto'},
+							{ color: 'rgba(237, 20, 28, 0.5)', cursor: 'url(' + path + 'img/chalk-red.png), auto'},
+							{ color: 'rgba(20, 237, 28, 0.5)', cursor: 'url(' + path + 'img/chalk-green.png), auto'},
+							{ color: 'rgba(220, 133, 41, 0.5)', cursor: 'url(' + path + 'img/chalk-orange.png), auto'},
+							{ color: 'rgba(220,0,220,0.5)', cursor: 'url(' + path + 'img/chalk-purple.png), auto'},
+							{ color: 'rgba(255,220,0,0.5)', cursor: 'url(' + path + 'img/chalk-yellow.png), auto'}
+						]
+					},
+					customcontrols: {
+						controls: [
+							{ icon: '<i class="fa fa-pen-square"></i>',
+								title: 'Toggle chalkboard (B)',
+								action: 'RevealChalkboard.toggleChalkboard();'
+							},
+							{ icon: '<i class="fa fa-pen"></i>',
+								title: 'Toggle notes canvas (C)',
+								action: 'RevealChalkboard.toggleNotesCanvas();'
+							}
+						]
+					},
+					// Learn about plugins: https://revealjs.com/plugins/
+					plugins: [RevealMarkdown, RevealHighlight, RevealNotes,RevealMenu,RevealChalkboard, RevealCustomControls]
+				});
+				Reveal.on( 'slidechanged', event => {
+					if(event.indexh == 5){
+						document.getElementById("persons").innerHTML = nicoIcon;
+					}
+				});
+				function changeTheme(input) {
+					var config = {};
+					config.theme = input.value;
+					Reveal.getPlugin("RevealChalkboard").configure(config);
+					input.blur();
+				}
+			</script>
+		</div>
+	</body>
 </html>
