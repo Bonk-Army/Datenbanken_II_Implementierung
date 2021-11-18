@@ -379,18 +379,33 @@
 				<section>
 					<section>
 						<h2 style="color: darkorange;">Grundprinzip der Optimierung</h2>
+						Ziel ist eine möglichst schnelle Anfragebearbeitung, um möglichst wenige Seitenzugriffe bei der Anfragebearbeitung durchzuführen.
 					</section>
 
 					<section>
 						<h3 style="color: lightskyblue;">Logische Optimierung</h3>
+						<ul>
+							<li>Umformung der übersetzten Anfrage als Relationenalgebra Term</li>
+							<li>Anfrageterm wird umgeformt. (Durch Selektionenverschiebung nach innen z.B.)</li>
+						</ul>
 					</section>
 
 					<section>
 						<h3 style="color: lightskyblue;">Physische Optimierung</h3>
+						<ul>
+							<li>Erzeugung eines oder mehrerer Zugriffspläne aus dem umgeformten Ausdruck</li>
+							<li>Ersetzen von abstrakten Algebraoperationen durch konkrete Algorithmen</li>
+							<li>Benötigt allerdings Information über vorliegende Indexstrukturen</li>
+						</ul>
 					</section>
 
 					<section>
 						<h3 style="color: lightskyblue;">Kostenbasierte Auswahl</h3>
+						<ul>
+							<li>Auswahl aus mehreren Plänen</li>
+							<li>Basierend auf statistischen Informationen</li>
+							<li>Diese statistischen Informationen werden im System gespeichert</li>
+						</ul>
 					</section>
 
 				</section>
@@ -398,10 +413,20 @@
 				<section>
 					<section>
 						<h2 style="color: darkorange;">Phasen der Optimierung</h2>
+						<ul>
+							<li>Anfrageübersetzung und -vereinfachung</li>
+							<li>Logische Optimierung</li>
+							<li>Physische Optimierung</li>
+							<li>Kostenbasierte Optimierung</li>
+							<li>Planparametrisierung</li>
+							<li>Codeerzeugung</li>
+						</ul>
 					</section>
 
 					<section>
 						<h3 style="color: lightskyblue;">Anfrageübersetzung und -vereinfachung</h3>
+						Umschreiben der Anfrage und darin enthaltenen Strukturen zur Verminderung der Komplexität.
+						Beispiel: SELECT-Statement mit WHERE-Clause zu einem JOIN.
 					</section>
 
 					<section>
@@ -415,10 +440,13 @@
 
 					<section>
 						<h3 style="color: lightskyblue;">Planparametrisierung</h3>
+						Bei vorkompilierten SQL-Anweisungen können Optimierungsschritte weggelassen werden, da Ausführungspläne bereits existieren.
+						-> Nur Platzhalter in Anfrage parametrisieren mit übergebenen Werten.
 					</section>
 
 					<section>
 						<h3 style="color: lightskyblue;">Codeerzeugung</h3>
+						Zugriffsplan wandelt schließlich Anfrage in Ausführbaren Code um. (Oder direkt vom Interpreter verarbeitet...)
 					</section>
 				</section>
 			</div>
