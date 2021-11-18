@@ -75,7 +75,7 @@
 		<div class="scriptsVARIABLES">
 			<script>
 				let nicoIcon = "&#129433;"; // 🦙
-				let dannyIcon = "&#127947;"; // 🏋️
+				let dannyIcon = "&#128058;"; // 🐺
 				let georgIcon = "&#128170;"; // 💪
 				let denisIcon = "&#128187;"; // 💻
 			</script>
@@ -165,7 +165,7 @@
 							<ol>
 								<li class="li__sub__sub--topic">SQL Command Line</li>
 								<li class="li__sub__sub--topic">DB spezifische SQL - Schnittstellen</li>
-								<li class="li__sub__sub--topic">Stored Procedures</li>
+								<li class="li__sub__sub--topic">PL/SQL</li>
 							</ol>
 							<li class="li__sub--topic">Programmierschnittstellen</li>
 							<ol>
@@ -218,16 +218,134 @@
 					<!-- SQL Command Line-->
 					<section>
 						<h3 style="color: lightskyblue;">SQL Command Line</h3>
+						<p class="caption">
+							<img src="./resources/images/6_sql_cli.png"
+								 style="width: 40%">
+							<br> Source : <a href="https://www.tableau.com/de-de/products/server">Matthias Goettler @DHBW Karlsruhe -- Datenbanken II-Implementierung -- Modul 4 – Programmier- und sonstige Schnittstellen</a>
+						</p>
 					</section>
 
 					<!-- DB spezifische SQL - Schnittstellen -->
 					<section>
 						<h3 style="color: lightskyblue;">DB spezifische SQL - Schnittstellen</h3>
+						<!-- https://learnsql.com/blog/what-sql-dialect-to-learn/ -->
+						<ul>
+							<li class="fragment" data-fragment-index="1">T-SQL - vom Sybase und Microsoft</li>
+							<span class="fragment highlight-current-red" data-fragment-index="4">
+								<li class="fragment" data-fragment-index="2">PL/SQL - Oracle</li>
+								<ul>
+									<li class="fragment">besteht aus <b style="color: red">U</b>ser<b style="color: red">D</b>efined<b style="color: red">F</b>unctions und <br>
+										<b style="color: red">U</b>ser-defined <b style="color: red">S</b>tored<b style="color: red">P</b>rocess</li>
+								</ul>
+							</span>
+						</ul>
+					</section>
+
+					<!-- Stored Procedures-->
+					<!-- https://en.wikipedia.org/wiki/User-defined_function -->
+					<section>
+						<h3 style="color: lightskyblue;">PL/SQL - User-Defined Functions (UDF)</h3>
+						<ul>
+							<li class="fragment">Erweitert den Funktionsumfang des Datenbankservers
+								<pre>
+									<code data-trim>
+										CREATE FUNCTION dbo.CtoF(Celsius FLOAT)
+											RETURNS FLOAT
+											RETURN (Celsius * 1.8) + 32
+									</code>
+								</pre>
+							</li>
+							<li class="fragment">Wird in einerm normalen SQL Anweisung evaluiert
+								<pre>
+									<code data-trim>
+										SELECT Name, CtoF(BoilingPoint)
+											FROM Elements
+									</code>
+								</pre>
+							</li>
+						</ul>
+
 					</section>
 
 					<!-- Stored Procedures-->
 					<section>
-						<h3 style="color: lightskyblue;">Stored Procedures</h3>
+						<h3 style="color: lightskyblue;">PL/SQL - User-Defined Stored Procedures (USP)</h3>
+						<ul>
+							<li>Sammlung von wiederkehrenden SQL Anweisungen zusammengefasst in einer Prozedur</li>
+							<li>Ausführung auf dem DB Server – nicht auf dem Client</li>
+							<ul>
+								<li>=> Extrem schnell</li>
+							</ul>
+						</ul>
+					</section>
+					<!-- http://www.dbarepublic.com/2016/04/oracle-stored-procedure-with-examples.html -->
+					<section>
+						<h3 style="color: lightskyblue;">PL/SQL - User-Defined Stored Procedures (USP)</h3>
+						<pre>
+							<code data-trim class="language-sql" data-line-numbers="1-3|4-5|6-7|8-9|10">
+								CREATE [OR REPLACE] PROCEDURE procedure_name [(
+								  parameter [,
+								  parameter]) ]
+								IS
+								 [VARIABLE declaration goes here]
+								BEGIN
+								 [Executable SQL statements goes here]
+								EXCEPTION
+								 [Error handling goes here]
+								END [procedure_name];
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h3 style="color: lightskyblue;">PL/SQL - User-Defined Stored Procedures (USP)</h3>
+						<pre style="height: 29em">
+							<code data-trim class="language-sql" data-line-numbers="1-4|5-8|9-18|19-23|24">
+								CREATE OR REPLACE PROCEDURE insert_employee(
+								  empno_in     IN NUMBER,
+								  ename_in     IN VARCHAR2,
+								  job_in       IN VARCHAR2,
+								-– Just the data type, don’t define the data length
+								IS
+								 ecode   NUMBER;
+								 emesg   VARCHAR2(200);
+								BEGIN
+								 INSERT INTO baniya.emp(
+								  empno,
+								  ename,
+								  job)
+								 VALUES(
+								  empno_in,
+								  ename_in,
+								  job_in);
+								 COMMIT;
+								EXCEPTION
+								 WHEN OTHERS THEN
+								  ecode := SQLCODE;
+								  emesg := SQLERRM;
+								  dbms_output.put_line(TO_CHAR(ecode) || '-' || emesg);
+								END insert_employee;
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h3 style="color: lightskyblue;">PL/SQL - User-Defined Stored Procedures (USP)</h3>
+						<pre>
+							<code data-trim class="language-sql" data-line-numbers="1-4|5-7|8">
+								declare
+										   empno_in        NUMBER          := 1234;
+										   ename_in        VARCHAR2(20)    := 'SCHEMID';
+										   job_in          VARCHAR2(50)    := 'VP';
+								begin
+									 baniya.insert_employee(empno_in, ename_in,
+								   job_in);
+								end;
+							</code>
+						</pre>
+						<p class="caption fragment">
+							<img src="https://3.bp.blogspot.com/-_mFxzEKsw0I/Vw29piZfAxI/AAAAAAAAIa4/Z4Hb14I9WtUEa7B4PB5764_6qvowbzKCwCLcB/s1600/dbarepublic_sp_1.png"
+								 style="width: 40%">
+							<br> Source : <a href="http://www.dbarepublic.com/2016/04/oracle-stored-procedure-with-examples.html">http://www.dbarepublic.com/2016/04/oracle-stored-procedure-with-examples.html</a>
+						</p>
 					</section>
 				</section>
 
