@@ -75,6 +75,7 @@
 		<div class="scriptsVARIABLES">
 			<script>
 				let erklaerFolie = false;
+				let icons = true;
 				let nicoIcon = "&#129433;"; // 🦙
 				let dannyIcon = "&#128058;"; // 🐺
 				let georgIcon = "&#128170;"; // 💪
@@ -147,9 +148,9 @@
 			</div>
 
 			<script type="text/javascript">
-				if (erklaerFolie == 1){
+				if (erklaerFolie || icons){
 					document.write('<div id="persons" class="persons">' + nicoIcon + '</div>');
-				};
+				}
 			</script>
 
 			<!-- Slides -->
@@ -753,9 +754,15 @@
 					plugins: [RevealMarkdown, RevealHighlight, RevealNotes,RevealMenu,RevealChalkboard, RevealCustomControls]
 				});
 				Reveal.on( 'slidechanged', event => {
-					if(erklaerFolie){
+					if(erklaerFolie || icons){
+						if(event.indexh == 4){
+							document.getElementById("persons").innerHTML = dannyIcon;
+						}
 						if(event.indexh == 5){
-							document.getElementById("persons").innerHTML = nicoIcon;
+							document.getElementById("persons").innerHTML = denisIcon;
+						}
+						if(event.indexh == 7){
+							document.getElementById("persons").innerHTML = georgIcon;
 						}
 					}
 				});
