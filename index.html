@@ -658,7 +658,7 @@
 						<h3 style="color: lightskyblue;">Anfrageübersetzung und -vereinfachung</h3>
 						Umschreiben der Anfrage und darin enthaltenen Strukturen zur Verminderung der Komplexität.<br>
 						Beispiel: SELECT-Statement mit WHERE-Clause zu einem JOIN.
-						
+
 						<div class="row">
 							<div class="column">
 								<h3>WHERE</h3>
@@ -680,7 +680,7 @@
 									</code>
 								</pre>
 							</div>
-						</div>	
+						</div>
 					</section>
 
 					<section>
@@ -794,8 +794,11 @@
 				});
 				Reveal.on( 'slidechanged', event => {
 					if(erklaerFolie || icons){
-						if(event.indexh == 4){
+						if(event.indexh == 3){
 							document.getElementById("persons").innerHTML = dannyIcon;
+						}
+						if(event.indexh == 4){
+							document.getElementById("persons").innerHTML = nicoIcon;
 						}
 						if(event.indexh == 5){
 							document.getElementById("persons").innerHTML = denisIcon;
